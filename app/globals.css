@@ -1,26 +1,368 @@
+/* Tailwind v4 */
 @import "tailwindcss";
 
+/* ----------------- TOKENS ----------------- */
+/* v4 tokens */
+@theme {
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(20 14.3% 4.1%);
+  --color-muted: hsl(60 4.8% 95.9%);
+  --color-muted-foreground: hsl(25 5.3% 44.7%);
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(20 14.3% 4.1%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(20 14.3% 4.1%);
+  --color-border: hsl(20 5.9% 90%);
+  --color-input: hsl(20 5.9% 90%);
+  --color-primary: hsl(243 84% 63%);
+  --color-primary-foreground: hsl(211 100% 99%);
+  --color-secondary: hsl(262 72% 64%);
+  --color-secondary-foreground: hsl(24 9.8% 10%);
+  --color-accent: hsl(188 95% 43%);
+  --color-accent-foreground: hsl(24 9.8% 10%);
+  --color-destructive: hsl(0 84.2% 60.2%);
+  --color-destructive-foreground: hsl(60 9.1% 97.8%);
+  --color-ring: hsl(20 14.3% 4.1%);
+  --radius: 0.5rem;
+
+  /* scales */
+  --color-primary-50: hsl(243 84% 97%);
+  --color-primary-100: hsl(243 84% 93%);
+  --color-primary-500: hsl(243 84% 63%);
+  --color-primary-600: hsl(243 84% 58%);
+  --color-primary-700: hsl(243 84% 53%);
+  --color-primary-900: hsl(243 84% 23%);
+
+  --color-secondary-50: hsl(262 72% 97%);
+  --color-secondary-100: hsl(262 72% 93%);
+  --color-secondary-500: hsl(262 72% 64%);
+  --color-secondary-600: hsl(262 72% 59%);
+  --color-secondary-700: hsl(262 72% 54%);
+  --color-secondary-900: hsl(262 72% 24%);
+
+  --color-accent-50: hsl(188 95% 95%);
+  --color-accent-100: hsl(188 95% 88%);
+  --color-accent-500: hsl(188 95% 43%);
+  --color-accent-600: hsl(188 95% 38%);
+  --color-accent-700: hsl(188 95% 33%);
+  --color-accent-900: hsl(188 95% 18%);
+
+  --color-green-100: hsl(142 76% 88%);
+  --color-green-400: hsl(142 76% 46%);
+  --color-green-600: hsl(142 76% 36%);
+  --color-green-900: hsl(142 76% 18%);
+
+  --color-red-50: hsl(0 84% 95%);
+  --color-red-100: hsl(0 84% 88%);
+  --color-red-600: hsl(0 84% 50%);
+  --color-red-700: hsl(0 84% 45%);
+  --color-red-900: hsl(0 84% 20%);
+
+  --color-orange-100: hsl(31 91% 88%);
+  --color-orange-400: hsl(31 91% 56%);
+  --color-orange-600: hsl(31 91% 46%);
+  --color-orange-900: hsl(31 91% 18%);
+
+  --color-blue-100: hsl(214 95% 88%);
+  --color-blue-600: hsl(214 95% 46%);
+  --color-blue-900: hsl(214 95% 18%);
+
+  --color-yellow-100: hsl(54 91% 88%);
+  --color-yellow-600: hsl(54 91% 46%);
+  --color-yellow-900: hsl(54 91% 18%);
+}
+
+/* v3 → v4 compatibility aliases
+   If any custom CSS still uses hsl(var(--primary)) etc., these keep it working. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-background);
+  --foreground: var(--color-foreground);
+  --muted: var(--color-muted);
+  --muted-foreground: var(--color-muted-foreground);
+  --popover: var(--color-popover);
+  --popover-foreground: var(--color-popover-foreground);
+  --card: var(--color-card);
+  --card-foreground: var(--color-card-foreground);
+  --border: var(--color-border);
+  --input: var(--color-input);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+  --secondary: var(--color-secondary);
+  --secondary-foreground: var(--color-secondary-foreground);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-foreground);
+  --destructive: var(--color-destructive);
+  --destructive-foreground: var(--color-destructive-foreground);
+  --ring: var(--color-ring);
+
+  --primary-50: var(--color-primary-50);
+  --primary-100: var(--color-primary-100);
+  --primary-500: var(--color-primary-500);
+  --primary-600: var(--color-primary-600);
+  --primary-700: var(--color-primary-700);
+  --primary-900: var(--color-primary-900);
+
+  --secondary-50: var(--color-secondary-50);
+  --secondary-100: var(--color-secondary-100);
+  --secondary-500: var(--color-secondary-500);
+  --secondary-600: var(--color-secondary-600);
+  --secondary-700: var(--color-secondary-700);
+  --secondary-900: var(--color-secondary-900);
+
+  --accent-50: var(--color-accent-50);
+  --accent-100: var(--color-accent-100);
+  --accent-500: var(--color-accent-500);
+  --accent-600: var(--color-accent-600);
+  --accent-700: var(--color-accent-700);
+  --accent-900: var(--color-accent-900);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Dark overrides (class strategy) */
+/* @theme .dark {
+  --color-background: hsl(240 10% 3.9%);
+  --color-foreground: hsl(0 0% 98%);
+  --color-muted: hsl(240 3.7% 15.9%);
+  --color-muted-foreground: hsl(240 5% 64.9%);
+  --color-popover: hsl(240 10% 3.9%);
+  --color-popover-foreground: hsl(0 0% 98%);
+  --color-card: hsl(240 10% 3.9%);
+  --color-card-foreground: hsl(0 0% 98%);
+  --color-border: hsl(240 3.7% 15.9%);
+  --color-input: hsl(240 3.7% 15.9%);
+  --color-primary: hsl(243 84% 63%);
+  --color-primary-foreground: hsl(211 100% 99%);
+  --color-secondary: hsl(240 3.7% 15.9%);
+  --color-secondary-foreground: hsl(0 0% 98%);
+  --color-accent: hsl(240 3.7% 15.9%);
+  --color-accent-foreground: hsl(0 0% 98%);
+  --color-destructive: hsl(0 62.8% 30.6%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+  --color-ring: hsl(240 4.9% 83.9%);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-primary-50: hsl(243 84% 12%);
+  --color-primary-100: hsl(243 84% 18%);
+  --color-primary-900: hsl(243 84% 8%);
+
+  --color-secondary-50: hsl(262 72% 12%);
+  --color-secondary-100: hsl(262 72% 18%);
+  --color-secondary-900: hsl(262 72% 8%);
+
+  --color-accent-50: hsl(188 95% 12%);
+  --color-accent-100: hsl(188 95% 18%);
+  --color-accent-900: hsl(188 95% 8%);
+
+  --color-green-100: hsl(142 76% 18%);
+  --color-green-900: hsl(142 76% 8%);
+  --color-red-50: hsl(0 84% 12%);
+  --color-red-100: hsl(0 84% 18%);
+  --color-red-900: hsl(0 84% 8%);
+  --color-orange-100: hsl(31 91% 18%);
+  --color-orange-900: hsl(31 91% 8%);
+  --color-blue-100: hsl(214 95% 18%);
+  --color-blue-900: hsl(214 95% 8%);
+  --color-yellow-100: hsl(54 91% 18%);
+  --color-yellow-900: hsl(54 91% 8%);
+} */
+
+/* ----------------- BASE ----------------- */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ----------------- COMPONENTS ----------------- */
+@layer components {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
+  .dark .glass-card {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  .calendar-day {
+    transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 120px;
+  }
+  .calendar-day:hover {
+    background: rgba(99, 102, 241, 0.1);
+  }
+  .dark .calendar-day:hover {
+    background: rgba(99, 102, 241, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .calendar-day {
+      min-height: 80px;
+      font-size: 0.875rem;
+    }
+    .calendar-grid {
+      gap: 1px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .glass-card {
+      border-radius: 0.75rem;
+      padding: 1rem;
+    }
+    button {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    .text-2xl {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+    .text-xl {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+    }
+    .mobile-card {
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .mobile-stack {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+
+  .gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  .dark-gradient-bg {
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+  }
+}
+
+/* ----------------- UTILITIES ----------------- */
+@utility animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+@utility animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+@utility animate-bounce-gentle {
+  animation: bounceGentle 2s infinite;
+}
+@utility backdrop-blur-xs {
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes bounceGentle {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-muted);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-muted-foreground);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-foreground);
+}
+
+/* Focus */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background: color-mix(in oklab, var(--color-primary) 20%, transparent);
+  color: var(--color-primary-foreground);
+}
+
+/* Transitions */
+* {
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Skeleton */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+.dark .skeleton {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  background-size: 200px 100%;
 }
