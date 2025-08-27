@@ -13,68 +13,75 @@ import {
   Heart,
 } from "lucide-react";
 import { Link } from "wouter";
-// import { useAuth } from "../hooks/useAuth";
 import { useToast } from "../hooks/use-toast";
-import { Song, Event } from "../shared/schema";
+import { Song, Event, User } from "../shared/schema";
 import TopNavBar from "../components/TopNavBar";
 import { Card, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import Sidebar from "../components/Sidebar";
+import useAuth from "../hooks/use-auth";
+import URLS from "../shared/urls";
 
-export default function Home() {
+export default function Homepage() {
   const { toast } = useToast();
-  // const { user, isLoading, isAuthenticated } = useAuth();
+  const { status, session } = useAuth();
+  const user = session?.user as User;
+  const isLoading = status === "loading";
+  const isAuthenticated = status === "authenticated";
 
   // Redirect to login if not authenticated
-  // useEffect(() => {
-  //   if (!isLoading && !isAuthenticated) {
-  //     toast({
-  //       title: "Unauthorized",
-  //       description: "You are logged out. Logging in again...",
-  //       variant: "destructive",
-  //     });
-  //     setTimeout(() => {
-  //       window.location.href = "/api/login";
-  //     }, 500);
-  //     return;
-  //   }
-  // }, [isAuthenticated, isLoading, toast]);
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      toast({
+        title: "Unauthorized",
+        description: "You are logged out. Logging in again...",
+        variant: "destructive",
+      });
+      setTimeout(() => {
+        window.location.href = URLS.LOGIN_CALLBACK_HOME;
+      }, 500);
+      return;
+    }
+  }, [isAuthenticated, isLoading, toast]);
+
+  // const events: Event[] = [];
+  // const songs: Song[] = [];
 
   // Fetch dashboard data
-  // const { data: events = [] } = useQuery<Event[]>({
-  //   queryKey: ["/api/events"],
-  //   enabled: isAuthenticated,
-  //   retry: false,
-  // });
+  const { data: events = [] } = useQuery<Event[]>({
+    queryKey: ["/api/events"],
+    enabled: isAuthenticated,
+    retry: false,
+  });
 
-  // const { data: songs = [] } = useQuery<Song[]>({
-  //   queryKey: ["/api/songs"],
-  //   enabled: isAuthenticated && user?.role === "admin",
-  //   retry: false,
-  // });
+  const { data: songs = [] } = useQuery<Song[]>({
+    queryKey: ["/api/songs"],
+    enabled: isAuthenticated && user?.role === "admin",
+    retry: false,
+  });
 
-  // if (!isAuthenticated || !user) {
-  //   return <div className="min-h-screen bg-gray-50 dark:bg-gray-900" />;
-  // }
+  if (!isAuthenticated || !user) {
+    return <div className="min-h-screen bg-gray-50 dark:bg-gray-900" />;
+  }
 
   // Calculate analytics
-  // const today = new Date();
-  // const thisWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-  // const upcomingEvents = events.filter(
-  //   (event) => new Date(event.date) >= today && new Date(event.date) <= thisWeek
-  // );
+  const today = new Date();
+  const thisWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+  const upcomingEvents = events.filter(
+    (event) => new Date(event.date) >= today && new Date(event.date) <= thisWeek
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Sidebar currentPath="/" />
 
       <div className="lg:ml-64">
-        {/* <TopNavBar title="Dashboard" /> */}
+        <TopNavBar title="Dashboard" />
 
         <main className="p-4 lg:p-4 lg:p-6 pt-20 lg:pt-6">
           {/* Analytics Cards */}
-          {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-4 lg:gap-4 lg:p-6 mb-6 lg:mb-6 lg:mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-4 lg:gap-4 lg:p-6 mb-6 lg:mb-6 lg:mb-8">
             <Card className="glass-card">
               <CardContent className="p-4 lg:p-6">
                 <div className="flex items-center">
@@ -178,12 +185,12 @@ export default function Home() {
                 </div>
               </CardContent>
             </Card>
-          </div> */}
+          </div>
 
           {/* Quick Actions and Upcoming Events */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-4 lg:gap-4 lg:p-6 mb-6 lg:mb-6 lg:mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-4 lg:p-6 mb-6 lg:mb-6 lg:mb-8">
             {/* Quick Actions */}
-            {/* <Card className="glass-card">
+            <Card className="glass-card">
               <CardContent className="p-4 lg:p-6">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                   Quick Actions
@@ -227,10 +234,10 @@ export default function Home() {
                   )}
                 </div>
               </CardContent>
-            </Card> */}
+            </Card>
 
             {/* Upcoming Events */}
-            {/* <Card className="lg:col-span-2 glass-card">
+            <Card className="lg:col-span-2 glass-card">
               <CardContent className="p-4 lg:p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -289,11 +296,11 @@ export default function Home() {
                   </div>
                 )}
               </CardContent>
-            </Card> */}
+            </Card>
           </div>
 
           {/* Welcome Message */}
-          {/* <Card className="glass-card">
+          <Card className="glass-card">
             <CardContent className="p-4 lg:p-6">
               <div className="flex items-start space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
@@ -311,7 +318,7 @@ export default function Home() {
                 </div>
               </div>
             </CardContent>
-          </Card> */}
+          </Card>
         </main>
       </div>
     </div>

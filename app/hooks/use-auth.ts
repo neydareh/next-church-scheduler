@@ -8,9 +8,9 @@ const useAuth = ({
 } = {}) => {
   const { status, data: session } = useSession({
     required: false,
-    // onUnauthenticated() {
-    //   redirect(`/api/auth/signin?callbackUrl=/${callbackUrl}`);
-    // },
+    onUnauthenticated() {
+      redirect(`/api/auth/signin?callbackUrl=/${callbackUrl}`);
+    },
   });
 
   return { status, session };
