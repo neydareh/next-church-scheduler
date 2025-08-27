@@ -22,14 +22,14 @@ import { Badge } from "../components/ui/badge";
 import { Search, Plus, Play, ExternalLink, Edit, Trash2 } from "lucide-react";
 import type { Song, User } from "../shared/schema";
 import { useSession } from "next-auth/react";
+import useAuth from "../hooks/use-auth";
 
 export default function Songs() {
   const { toast } = useToast();
-  // const { user, isLoading, isAuthenticated } = useAuth();
-  const { status, data: session } = useSession();
+  const { status, session } = useAuth();
   const isAuthenticated = status === "authenticated";
   const isLoading = status === "loading";
-  const user = status === "authenticated" ? (session.user as User) : null;
+  const user = status === "authenticated" ? (session!.user as User) : null;
 
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState("");
