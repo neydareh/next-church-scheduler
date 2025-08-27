@@ -5,12 +5,11 @@ import {
   Calendar,
   CalendarX,
   Music,
-  Plus,
   Settings,
   X,
   Menu,
 } from "lucide-react";
-import { Link } from "wouter";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 interface SidebarProps {
@@ -18,7 +17,6 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ currentPath }: SidebarProps) {
-  // const { user } = useAuth();
   const user = {
     firstName: "Olakunle",
     lastName: "Neye",
@@ -46,7 +44,7 @@ export default function Sidebar({ currentPath }: SidebarProps) {
 
   const navItems = [
     {
-      href: "/",
+      href: "/home",
       icon: Church,
       label: "Dashboard",
       adminOnly: false,
