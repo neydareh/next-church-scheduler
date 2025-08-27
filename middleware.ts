@@ -1,8 +1,5 @@
 export { default } from "next-auth/middleware";
 
 export const config = {
-  matcher: [
-    "/api/:path*",
-    // leave home public
-  ],
+  matcher: ["/api/(?!auth).*"], // match all API routes except NextAuth's
 };
